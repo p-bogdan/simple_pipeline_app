@@ -1,0 +1,51 @@
+pipeline {
+    agent any
+     environment {
+        instance_name = "${sh(script:'terraform output -raw instance_name', returnStdout: true)}"
+        gcp_project_id = 'lab-project-282605'
+     }
+    stages {
+       stage('Initialize terraform') {
+            steps {
+               echo 'Initialize terraform'
+               sh 'terraform init'
+            }
+       }
+
+      stage('Create GCP instance') {
+            steps {
+               echo 'Creating compute instance in GCP'
+               sh 'terraform apply --auto-approve'
+            }
+      }
+        stage('Download artifact to terraform instance') {
+            steps {
+                 timeout(time: 1, unit: 'MINUTES') {
+                    retry(3) {
+                        sh "gcloud compute ssh --zone us-central1-a ${env.instance_name} --project ${env.gcp_project_id} --command \'gsutil cp gs://simple-pipeline-artifact/app/build/distributions/app.tar /tmp\'"
+                    }
+                 }
+            }
+        }
+         stage('Running gradle project and check artifact') {
+            steps {
+               timeout(time: 1, unit: 'MINUTES') {
+                    retry(3) {
+                      sh "gcloud compute ssh --zone us-central1-a ${env.instance_name} --project ${env.gcp_project_id} --command \'tar -xvf /tmp/app.tar -C /tmp\'"
+                      sh "gcloud compute ssh --zone us-central1-a ${env.instance_name} --project ${env.gcp_project_id} --command \'bash /tmp/app/bin/app\'"
+                    }
+               }
+            }
+         }
+
+         stage('Destroy GCP instance final') {
+            steps {
+              timeout(time: 5, unit: 'MINUTES') {
+              input(id: 'Destroying terraform instance', message: 'Are you sure to destroy GCP instance?', ok: 'Destroy')
+              echo 'Destroying GCP instance'
+              sh 'terraform destroy -force'
+              }
+            }
+         }
+    }
+}
