@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: static-web
+  labels:
+    role: myrole
+spec:
+  containers:
+    - name: web
+      image: iptcp/simple-app:0.6
+      ports:
+        - name: web
+          containerPort: 80
+          protocol: TCP
+      command: ["/bin/sh"]
+      args: ["-c", "while true; do sh app/build/distributions/app/bin/app; sleep 10;done"]
+
+
