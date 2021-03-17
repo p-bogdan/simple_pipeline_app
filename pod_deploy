@@ -20,11 +20,4 @@ podTemplate(yaml: """\
 
 
         tty: true
-    """.stripIndent()) {
-    node(POD_LABEL) {
-      container('iptcp/simple-app:0.5') {
-        echo POD_CONTAINER // displays 'busybox'
-        sh "hostname"
-      }
-    }
-}
+    """
