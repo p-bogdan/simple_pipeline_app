@@ -11,7 +11,7 @@ spec:
     image: iptcp/simple-app:0.5
     imagePullPolicy: IfNotPresent
     command: ["/bin/sh"]
-    args: ["-c", "sh app/build/distributions/app/bin/app"]
+    args: ["-c", "sleep 300"]
 """
     }
   }
@@ -19,7 +19,6 @@ spec:
     stage('Deploying simple-app') {
       steps {
         echo "Deploying simple-app"
-        sh 'sleep 300'
       }
     }
   }
