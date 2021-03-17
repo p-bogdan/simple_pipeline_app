@@ -7,7 +7,7 @@ pipeline {
         image 'iptcp/simple-app:0.5'
         ttyEnabled true
         command '/bin/sh'
-        args '-c hostname'
+        args: ['-c', 'hostname']
       }
     }
   }
