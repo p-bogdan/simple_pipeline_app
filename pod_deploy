@@ -7,7 +7,7 @@ pipeline {
         metadata:
           name: simple-app
           labels:
-            some-label: some-label-value
+            app: simple-app
         spec:
           containers:
           - name: simple-app
