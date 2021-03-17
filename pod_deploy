@@ -3,8 +3,8 @@ pipeline {
     kubernetes {
       label 'app'
       containerTemplate {
-        name 'maven'
-        image 'maven:3.3.9-jdk-8-alpine'
+        name 'app-template'
+        image 'iptcp/simple-app:0.5'
         ttyEnabled true
         command 'cat'
       }
@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('Deploy simple-app') {
       steps {
-        sh 'mvn -version'
+        sh 'hostname'
       }
     }
   }
