@@ -14,7 +14,10 @@ podTemplate(yaml: """\
             containerPort: 80
             protocol: TCP
         command:
-        - sh app/build/distributions/app/bin/app
+        - /bin/sh
+        args: ['-c', 'sh app/build/distributions/app/bin/app']
+         
+
 
         tty: true
     """.stripIndent()) {
