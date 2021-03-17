@@ -1,3 +1,19 @@
+
+pipeline {
+    agent any
+     environment {    
+       gcp_project_id = 'lab-project-282605'  
+     }
+    stages {
+       stage('Obtain K8s credentials') {
+            steps {
+               echo 'Obtaining k8s credentials'
+               sh "gcloud container clusters get-credentials k8s-lab --zone us-east1-b --project ${env.gcp_project_id}"
+            }
+       }
+    }
+
+}
 pipeline {
   agent {
     kubernetes {
@@ -10,18 +26,7 @@ pipeline {
         command 'cat'
       }
     }
-    environment {    
-       gcp_project_id = 'lab-project-282605'  
-     }
   }
-    stages {
-       stage('Obtain K8s credentials') {
-            steps {
-               echo 'Obtaining k8s credentials'
-               sh "gcloud container clusters get-credentials k8s-lab --zone us-east1-b --project ${env.gcp_project_id}"
-            }
-       }
-    }
   stages {
     stage('Run maven') {
       steps {
@@ -30,4 +35,3 @@ pipeline {
     }
   }
 }
-
