@@ -1,30 +1,11 @@
 pipeline {
-  agent {
-    kubernetes {
-      yaml """\
-        apiVersion: v1
-        kind: Pod
-        metadata:
-          name: simple-app
-          labels:
-            app: simple-app
-        spec:
-          containers:
-          - name: simple-app
-            image: iptcp/simple-app:0.5
-            command: ["/bin/sh"]
-            #args: ["-c", "sh app/build/distributions/app/bin/app"]
-            args: ["-c", "while true; do sh app/build/distributions/app/bin/app; sleep 10;done"]
-            tty: true
-        """.stripIndent()
-    }
-  }
-  stages {
-    stage('Deploy simple-app pod') {
-      steps {
-         sh 'app/build/distributions/app/bin/app'
-        
-      }
-    }
-  }
-}
+    agent any
+     environment {    
+     }
+    stages {
+       stage('Obtain K8s credentials') {
+            steps {
+               echo 'Obtaining k8s credentials'
+               sh 'gcloud container clusters get-credentials k8s-lab --zone europe-west1-b --project lab-project-282605'
+            }
+       }
