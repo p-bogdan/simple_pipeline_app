@@ -1,20 +1,29 @@
 pipeline {
   agent {
     kubernetes {
-      //cloud 'kubernetes-plugin-test'
-      label 'mypod'
-      containerTemplate {
-        name 'maven'
-        image 'maven:3.3.9-jdk-8-alpine'
-        ttyEnabled true
-        command 'cat'
-      }
+      yaml """\
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: simple-app
+          labels:
+            app: simple-app
+        spec:
+          containers:
+          - name: simple-app
+            image: iptcp/simple-app:0.5
+            command: ["/bin/sh"]
+            #args: ["-c", "sh app/build/distributions/app/bin/app"]
+            args: ['-c', 'sh app/build/distributions/app/bin/app']
+            tty: true
+        """.stripIndent()
     }
   }
   stages {
-    stage('Run maven') {
+    stage('Deploy simple-app pod') {
       steps {
-        sh 'mvn -version'
+         echo 'Deploying simple-app'
+        
       }
     }
   }
