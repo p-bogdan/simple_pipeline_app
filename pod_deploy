@@ -1,20 +1,28 @@
-podTemplate(yaml: """\
-    apiVersion: v1
-    kind: Pod
-    metadata:
-      name: simple-app
-      labels: 
-        role: myrole
-    spec:
-      containers:
-      - name: simple-pod-app
-        image: iptcp/simple-app:0.5
-        ports:
-          - name: web
-            containerPort: 80
-            protocol: TCP
-        #command:
-        #- /bin/sh
-        #args: ['-c', 'sh app/build/distributions/app/bin/app']
-        tty: true
-    """)
+pipeline {
+  agent {
+    kubernetes {
+      yaml """\
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          name: simple-app
+          labels:
+            some-label: some-label-value
+        spec:
+          containers:
+          - name: simple-app
+            image: iptcp/simple-app:0.5
+            tty: true
+        """.stripIndent()
+    }
+  }
+  stages {
+    stage('Deploy simple-app pod') {
+      steps {
+        container('maven') {
+          sh 'app/build/distributions/app/bin/app'
+        }
+      }
+    }
+  }
+}
