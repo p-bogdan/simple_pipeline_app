@@ -22,7 +22,7 @@ pipeline {
             steps {
                  timeout(time: 1, unit: 'MINUTES') {
                     retry(3) {
-                        sh "gcloud compute ssh --zone us-central1-a \'${env.instance_name}\' --project ${env.gcp_project_id} --command \'gsutil cp gs://simple-pipeline-artifact/app/build/distributions/app.tar /tmp\'"
+                        sh "gcloud compute ssh --zone us-central1-a \'${env.instance_name}\' --project '${env.gcp_project_id}' --command \'gsutil cp gs://simple-pipeline-artifact/app/build/distributions/app.tar /tmp\'"
                     }
                  }
             }
