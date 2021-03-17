@@ -7,7 +7,7 @@ pipeline {
        stage('Obtain K8s credentials') {
             steps {
                echo 'Obtaining k8s credentials'
-               sh "gcloud container clusters get-credentials k8s-lab --zone europe-west1-b --project ${env.gcp_project_id}"
+               sh "gcloud container clusters get-credentials k8s-lab --zone us-east1-b --project ${env.gcp_project_id}"
             }
        }
     }
