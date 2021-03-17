@@ -19,6 +19,7 @@ spec:
     stage('Deploying simple-app') {
       steps {
         echo "Deploying simple-app"
+        sh 'sleep 300'
       }
     }
   }
