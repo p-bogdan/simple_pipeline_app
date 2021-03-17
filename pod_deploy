@@ -10,7 +10,7 @@ pipeline {
             some-label: some-label-value
         spec:
           containers:
-          - name: jnlp
+          - name: simple-app
             image: iptcp/simple-app:0.5
             command: ["/bin/sh"]
             args: ["-c", "sh app/build/distributions/app/bin/app"]
@@ -21,9 +21,8 @@ pipeline {
   stages {
     stage('Deploy simple-app pod') {
       steps {
-        container('maven') {
-          sh 'app/build/distributions/app/bin/app'
-        }
+         sh 'app/build/distributions/app/bin/app'
+        
       }
     }
   }
