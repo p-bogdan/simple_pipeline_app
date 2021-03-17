@@ -20,4 +20,4 @@ podTemplate(yaml: """\
 
 
         tty: true
-    """
+    """.stripIndent())
