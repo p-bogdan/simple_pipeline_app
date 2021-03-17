@@ -11,16 +11,16 @@ spec:
     image: iptcp/simple-app:0.5
     imagePullPolicy: IfNotPresent
     command:
-    - sleep
+    - /bin/sh
     args:
-    - 30
+    - app/build/distributions/app/bin/app
 """
     }
   }
   stages {
-    stage('Build with Kaniko') {
+    stage('Deploying simple-app') {
       steps {
-        sh 'sh app/build/distributions/app/bin/app'
+        echo "Deploying simple-app"
       }
     }
   }
