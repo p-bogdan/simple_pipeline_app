@@ -1,18 +1,17 @@
 pipeline {
   agent {
     kubernetes {
-      //cloud 'kubernetes-plugin-test'
-      label 'mypod'
+      label 'app'
       containerTemplate {
         name 'maven'
         image 'maven:3.3.9-jdk-8-alpine'
         ttyEnabled true
-        //command 'cat'
+        command 'cat'
       }
     }
   }
   stages {
-    stage('Run maven') {
+    stage('Deploy simple-app') {
       steps {
         sh 'mvn -version'
       }
