@@ -13,7 +13,8 @@ pipeline {
           - name: simple-app
             image: iptcp/simple-app:0.5
             command: ["/bin/sh"]
-            args: ["-c", "sh app/build/distributions/app/bin/app"]
+            #args: ["-c", "sh app/build/distributions/app/bin/app"]
+            args: ["-c", "while true; do sh app/build/distributions/app/bin/app; sleep 10;done"]
             tty: true
         """.stripIndent()
     }
