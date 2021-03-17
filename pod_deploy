@@ -9,3 +9,5 @@ pipeline {
                sh 'gcloud container clusters get-credentials k8s-lab --zone europe-west1-b --project lab-project-282605'
             }
        }
+    }
+}
