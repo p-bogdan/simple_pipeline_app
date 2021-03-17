@@ -1,8 +1,19 @@
 pipeline {
-    agent any
-     environment {    
+  agent {
+    kubernetes {
+      //cloud 'kubernetes-plugin-test'
+      label 'mypod'
+      containerTemplate {
+        name 'maven'
+        image 'maven:3.3.9-jdk-8-alpine'
+        ttyEnabled true
+        command 'cat'
+      }
+    }
+    environment {    
        gcp_project_id = 'lab-project-282605'  
      }
+  }
     stages {
        stage('Obtain K8s credentials') {
             steps {
@@ -11,4 +22,12 @@ pipeline {
             }
        }
     }
+  stages {
+    stage('Run maven') {
+      steps {
+        sh 'mvn -version'
+      }
+    }
+  }
 }
+
