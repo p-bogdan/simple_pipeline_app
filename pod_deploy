@@ -13,7 +13,7 @@ pipeline {
   stages {
     stage('Deploy simple-app') {
       steps {
-        sh 'hostname'
+        echo 'Deploying simple app'
       }
     }
   }
