@@ -20,12 +20,12 @@ spec:
       }
       
     }
-    stage('Creating compute instance in GCP') {
+    /*stage('Creating compute instance in GCP') {
       steps {
         echo 'Creating compute instance in GCP'
         sh 'apply --auto-approve'
       }
       
-    }
+    }*/
   }
 }
