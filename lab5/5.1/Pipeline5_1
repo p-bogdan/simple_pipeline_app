@@ -10,15 +10,15 @@ spec:
   - name: pipeline5-1-app
     image: hashicorp/terraform:0.14.8
     imagePullPolicy: IfNotPresent
-    //command: ["/bin/sh"]
-    //args: ["-c", "sh app/build/distributions/app/bin/app; sleep 300"]
+    command: ["/bin/terraform"]
+    args: ["init; sleep 300"]
 """
     }
   }
   stages {
     stage('Initializing terraform') {
       steps {
-        sh 'init'
+        echo "terraform init"
       }
     }
   }
