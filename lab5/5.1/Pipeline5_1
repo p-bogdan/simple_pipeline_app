@@ -1,0 +1,25 @@
+pipeline {
+  agent {
+    kubernetes {
+      //cloud 'kubernetes'
+      //defaultContainer 'simple-app'
+      yaml """
+kind: Pod
+spec:
+  containers:
+  - name: pipeline-5.1
+    image: hashicorp/terraform:0.14.8
+    imagePullPolicy: IfNotPresent
+    command: ["/bin/sh"]
+    args: ["-c", "terraform init"]
+"""
+    }
+  }
+  stages {
+    stage('Initializing terraform') {
+      steps {
+        echo "Initializing terraform"
+      }
+    }
+  }
+}
