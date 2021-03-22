@@ -16,14 +16,14 @@ spec:
   stages {
     stage('Initializing terraform') {
       steps {
-        sh 'terraform init'
+        sh 'init'
       }
       
     }
     stage('Creating compute instance in GCP') {
       steps {
         echo 'Creating compute instance in GCP'
-        sh 'terraform apply --auto-approve'
+        sh 'apply --auto-approve'
       }
       
     }
