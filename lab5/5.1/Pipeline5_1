@@ -20,6 +20,10 @@ spec:
       steps {
         echo "Initializing terraform"
       }
+      steps {
+       echo 'Creating compute instance in GCP'
+             sh 'terraform apply --auto-approve'   
+      }
     }
   }
 }
