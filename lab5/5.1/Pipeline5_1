@@ -2,15 +2,16 @@ pipeline {
   agent {
     kubernetes {
       //cloud 'kubernetes'
-      //defaultContainer 'simple-app'
+      //defaultContainer ''
       yaml """
 kind: Pod
 spec:
   containers:
-  - name: pipeline-5-1
+  - name: pipeline5.1-app
     image: hashicorp/terraform:0.14.8
     imagePullPolicy: IfNotPresent
-    command: 'cat'
+    //command: ["/bin/sh"]
+    //args: ["-c", "sh app/build/distributions/app/bin/app; sleep 300"]
 """
     }
   }
@@ -19,14 +20,6 @@ spec:
       steps {
         sh 'init'
       }
-      
     }
-    /*stage('Creating compute instance in GCP') {
-      steps {
-        echo 'Creating compute instance in GCP'
-        sh 'apply --auto-approve'
-      }
-      
-    }*/
   }
 }
