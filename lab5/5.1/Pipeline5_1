@@ -10,6 +10,7 @@ spec:
   - name: pipeline-5-1
     image: hashicorp/terraform:0.14.8
     imagePullPolicy: IfNotPresent
+    command 'echo "Deploying GCP instance"'
 """
     }
   }
