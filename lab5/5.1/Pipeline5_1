@@ -21,11 +21,17 @@ spec:
         echo "Running gradle build"
       }
     }
-     stage('Running app') {
+    stage('Running app') {
       steps {
         echo "Running gradle app"
         sh './gradlew run'
       }
     }
+    stage('Smoke test') {
+      steps {
+        echo 'Smoke test'
+        sh './gradlew run | grep "Hello World!"'
+        }
+        }
   }
 }
