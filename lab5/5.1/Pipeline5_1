@@ -7,18 +7,18 @@ pipeline {
 kind: Pod
 spec:
   containers:
-  - name: pipeline5-1-app
-    image: hashicorp/terraform:0.14.8
+  - name: gradle-build
+    image: iptcp/gradle-app:0.1
     imagePullPolicy: IfNotPresent
-    command: ["/bin/terraform"]
-    args: ["init; sleep 300"]
+    command: ["./gradlew"]
+    args: ["build; sleep 300"]
 """
     }
   }
   stages {
-    stage('Initializing terraform') {
+    stage('Building app') {
       steps {
-        echo "terraform init"
+        echo "Running gradle build"
       }
     }
   }

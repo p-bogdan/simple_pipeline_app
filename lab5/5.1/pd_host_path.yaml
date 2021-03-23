@@ -1,0 +1,39 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: simple-app-pv-claim
+spec:
+  storageClassName: manual
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+---      
+kind: StorageClass
+apiVersion: storage.k8s.io/v1
+metadata:
+  name: manual
+provisioner: kubernetes.io/gce-pd
+parameters:
+  type: pd-standard
+  replication-type: none
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple
+spec:
+  volumes:
+    - name: simple-app-storage
+      persistentVolumeClaim:
+        claimName: simple-app-pv-claim
+  containers:
+    - name: simple-app-pv-container
+      image: nginx
+      ports:
+        - containerPort: 80
+          name: "simple-app"
+      volumeMounts:
+        - mountPath: "/home/iptcp/devops/simple_pipeline_app"
+          name: simple-app-storage

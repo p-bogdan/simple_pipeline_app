@@ -1,0 +1,5 @@
+FROM gradle:jdk-openj9
+COPY --chown=gradle:gradle ./app_data/ /home/gradle
+WORKDIR /home/gradle
+RUN ./gradlew clean
+EXPOSE 80

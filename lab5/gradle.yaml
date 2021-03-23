@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-app
+  labels:
+    role: myrole
+spec:
+  containers:
+    - name: simple-app
+      #image: iptcp/simple-app:0.6
+      image: iptcp/gradle-app:0.1
+      ports:
+        - name: web
+          containerPort: 80
+          protocol: TCP
+      command: ["./gradlew"]
+      args: ["build"]

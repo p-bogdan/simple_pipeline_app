@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: simple-app
+  labels:
+    role: myrole
+spec:
+  containers:
+    - name: terraform
+      #image: iptcp/simple-app:0.6
+      image: hashicorp/terraform:0.14.8
+      tty: false
+      ports:
+        - name: web
+          containerPort: 80
+          protocol: TCP
+      command: ["/bin/terraform"]
+      #args: ["-c", "while true; do sh app/build/distributions/app/bin/app; sleep 10;done"]
+      args: ["init"]
