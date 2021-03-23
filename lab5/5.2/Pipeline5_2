@@ -42,5 +42,3 @@ spec:
               sh 'bash /tmp/app/bin/app'
             }
         }*/
-  }
-}
