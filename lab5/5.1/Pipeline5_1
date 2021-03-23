@@ -37,6 +37,12 @@ spec:
       steps {
         googleStorageUpload bucket: 'gs://simple-pipeline-artifact', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*' 
         }
-        }  
+        }
+    stage('Setting GCP bucket lifecycle') {
+      steps {
+        googleStorageBucketLifecycle bucket: 'gs://simple-pipeline-artifact', credentialsId: 'simple-pipeline-app', ttl: '300' 
+        }
+        }
+          
   }
 }
