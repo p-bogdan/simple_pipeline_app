@@ -19,7 +19,7 @@ spec:
         CREDENTIALS_ID ='simple-pipeline-app'
         BUCKET = 'simple-pipeline-artifact'
         PATTERN = 'app/build/distributions/*.tar'
-        LOCAL_DIR = '/home/gradle/app'
+        LOCAL_DIR = '/tmp'
     }
     stages {
         stage('Download from GCS') {
