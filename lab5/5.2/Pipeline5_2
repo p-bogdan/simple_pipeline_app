@@ -25,5 +25,15 @@ spec:
                       localDirectory: /home/gradle/app])
             }
         }
+        stage('Run artifact') {
+            steps{
+              echo "Unpacking artifact"
+              sh 'tar -xvf ./app/app.tar -C /tmp\'
+            }
+            steps {
+              echo "Running artifact"
+              sh 'bash /tmp/app/bin/app'
+            }
+        }
   }
 }
