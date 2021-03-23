@@ -33,5 +33,10 @@ spec:
         sh './gradlew run | grep "Hello World!"'
         }
         }
+    stage('Upload artifact to GCP storage') {
+      steps {
+        googleStorageUpload bucket: 'gs://simple-pipeline-artifact', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*' 
+        }
+        }  
   }
 }
