@@ -35,8 +35,7 @@ spec:
               echo "Unpacking artifact"
               sh 'tar -xvf /tmp/app/build/distributions/app.tar'
               echo "Running artifact"
-              sh 'ls -al'
-              //sh 'bash /tmp/app/build/distributions/app/bin/app'
+              sh 'bash ./app/build/distributions/app/bin/app'
             }
         }
     }
