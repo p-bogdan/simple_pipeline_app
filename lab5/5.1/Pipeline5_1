@@ -40,7 +40,7 @@ spec:
         }
     stage('Setting GCP bucket lifecycle') {
       steps {
-        googleStorageBucketLifecycle bucket: 'gs://simple-pipeline-artifact', credentialsId: 'simple-pipeline-app', ttl: '300' 
+        googleStorageBucketLifecycle bucket: 'gs://simple-pipeline-artifact', credentialsId: 'simple-pipeline-app', ttl: 300 
         }
         }
           
