@@ -15,16 +15,23 @@ spec:
 """
     }
   }
-  stages {
-  
+  environment {
+        CREDENTIALS_ID ='simple-pipeline-app'
+        BUCKET = 'simple-pipeline-artifact'
+        PATTERN = 'app/build/distributions/*.tar'
+        LOCAL_DIR = '/home/gradle/app'
+    }
+    stages {
         stage('Download from GCS') {
             steps{
                 // Download from GCS bucket object named PATTERN to directory LOCAL_DIR.
-                step([$class: 'DownloadStep', credentialsId: simple-pipeline-app
-                        .CREDENTIALS_ID,  bucketUri: "gs://simple-pipeline-artifact",
-                      localDirectory: /home/gradle/app])
+                step([$class: 'DownloadStep', credentialsId: env
+                        .CREDENTIALS_ID,  bucketUri: "gs://${env.BUCKET}/${env.PATTERN}",
+                      localDirectory: env.LOCAL_DIR])
             }
         }
+    }
+}
         stage('Run artifact') {
             steps{
               echo "Unpacking artifact"
