@@ -34,8 +34,6 @@ spec:
             steps{
               echo "Unpacking artifact"
               sh 'tar -xvf /tmp/app/build/distributions/app.tar'
-            }
-            steps {
               echo "Running artifact"
               sh 'bash /tmp/app/build/distributions/app/bin/app'
             }
