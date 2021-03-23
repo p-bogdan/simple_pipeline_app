@@ -21,5 +21,11 @@ spec:
         echo "Running gradle build"
       }
     }
+     stage('Running app') {
+      steps {
+        echo "Running gradle app"
+        sh './gradlew run'
+      }
+    }
   }
 }
