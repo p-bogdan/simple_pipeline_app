@@ -30,15 +30,16 @@ spec:
                       localDirectory: env.LOCAL_DIR])
             }
         }
-    }
-}
-        /*stage('Run artifact') {
+        stage('Run artifact') {
             steps{
               echo "Unpacking artifact"
-              sh 'tar -xvf ./app/app.tar -C /tmp\'
+              sh 'tar -xvf /tmp/app/build/distributions/app.tar'
             }
             steps {
               echo "Running artifact"
-              sh 'bash /tmp/app/bin/app'
+              sh 'bash /tmp/app/build/distributions/app/bin/app'
             }
-        }*/
+        }
+    }
+}
+      
