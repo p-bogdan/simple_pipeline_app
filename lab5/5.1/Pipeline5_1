@@ -23,7 +23,17 @@ pipeline {
         container('app') {
           sh './gradlew build'
         }
-      }
+      }  
+    }
+     stage('Running app') {
+      steps {
+        container('app') {
+        sh 'java -version'
+        echo "Running gradle app"
+        sh './gradlew run'
+        }
+      }  
     }
   }
+
 }
