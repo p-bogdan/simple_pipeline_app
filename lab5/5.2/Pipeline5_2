@@ -33,6 +33,7 @@ pipeline {
          sh 'ls -alR /home/gradle/app'
          sh 'pwd'
          sh 'whoami'
+         sh '/home/jenkins/agent/workspace/Pipeline_5.2_main/app/build/distributions/'
         }
       }  
     }
