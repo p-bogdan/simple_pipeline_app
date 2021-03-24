@@ -34,6 +34,21 @@ pipeline {
         }
       }  
     }
+    stage('Smoke test') {
+      steps {
+        container('app') {
+        echo 'Smoke test'
+        sh './gradlew run | grep "Hello World!"'
+        }
+      }  
+    }
+    stage('Upload artifact to GCP storage') {
+      steps {
+        container('app') {
+        googleStorageUpload bucket: 'gs://simple-pipeline-artifact2', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*'
+        }
+      }  
+    }
   }
 
 }
