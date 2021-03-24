@@ -17,7 +17,7 @@ pipeline {
         }
          stage('Upload artifact to GCP storage') {
             steps {
-                googleStorageUpload bucket: 'gs://simple-pipeline-artifact', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*' 
+                googleStorageUpload bucket: 'gs://simple-pipeline-artifact2', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*' 
                 /*archiveArtifacts artifacts: 'dist/trainSchedule.zip'*/
             }
         }
