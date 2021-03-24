@@ -21,7 +21,7 @@ pipeline {
         CREDENTIALS_ID ='simple-pipeline-app'
         BUCKET = 'simple-pipeline-artifact2'
         PATTERN = 'app/build/distributions/*.tar'
-        LOCAL_DIR = '/tmp'
+        LOCAL_DIR = '.'
     }
   stages {
     stage('Download from GCS') {
