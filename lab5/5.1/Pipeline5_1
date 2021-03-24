@@ -48,27 +48,3 @@ spec:
   }
 }
 
-node(POD_LABEL) {
-    stage('Building and running app') {
-      container('gradle-build') {
-        sh 'java -version'
-        echo "Running gradle app"
-        sh './gradlew run'
-      }
-    }
-
-    stage('Smoke test') {
-      container('gradle-build') {
-        echo 'Smoke test'
-        sh './gradlew run | grep "Hello World!"'
-      }
-    }
-    stage('Upload artifact to GCP storage') {
-      steps {
-        googleStorageUpload bucket: 'gs://simple-pipeline-artifact2', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*' 
-        }
-        }
-
-  }
-}
-
