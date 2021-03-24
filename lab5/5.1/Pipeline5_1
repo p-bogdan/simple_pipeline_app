@@ -1,44 +1,29 @@
 pipeline {
   agent {
     kubernetes {
-      //cloud 'kubernetes'
-      //defaultContainer ''
-      yaml """
-kind: Pod
-spec:
-  containers:
-  - name: gradle-build
-    image: iptcp/gradle-app:0.3
-    imagePullPolicy: IfNotPresent
-    command: ["./gradlew"]
-    args: ["build; sleep 300"]
-""".stripIndent()
+      yaml """\
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          labels:
+            app: simple-app
+        spec:
+          containers:
+          - name: app
+            image: iptcp/gradle-app:0.3
+            command:
+            - cat
+            tty: true
+        """.stripIndent()
     }
   }
   stages {
     stage('Building app') {
       steps {
-        echo "Running gradle build"
+        container('app') {
+          sh './gradlew build'
+        }
       }
     }
-    stage('Running app') {
-      steps {
-        sh 'java -version'
-        echo "Running gradle app"
-        sh './gradlew run'
-        }
-      }
-    stage('Smoke test') {
-      steps {
-        echo 'Smoke test'
-        sh './gradlew run | grep "Hello World!"'
-        }
-        }
-    stage('Upload artifact to GCP storage') {
-      steps {
-        googleStorageUpload bucket: 'gs://simple-pipeline-artifact2', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*' 
-        }
-        } 
   }
 }
-
