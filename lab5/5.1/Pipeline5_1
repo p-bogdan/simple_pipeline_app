@@ -38,7 +38,7 @@ pipeline {
       steps {
         container('app') {
         echo 'Smoke test'
-        sh './gradlew run | grep "Hello World!"'
+        sh './gradlew rund | grep "Hello World!"'
         }
       }  
     }
