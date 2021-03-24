@@ -31,7 +31,6 @@ spec:
             }
         }
         stage('Run artifact') {
-            agent { docker 'iptcp/gradle-app:0.2' } 
             steps{
               echo "Checking java version"
               sh 'java -version'
