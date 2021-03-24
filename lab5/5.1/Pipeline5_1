@@ -8,7 +8,7 @@ kind: Pod
 spec:
   containers:
   - name: gradle-build
-    image: iptcp/gradle-app:0.1
+    image: iptcp/gradle-app:0.2
     imagePullPolicy: IfNotPresent
     command: ["./gradlew"]
     args: ["build; sleep 300"]
