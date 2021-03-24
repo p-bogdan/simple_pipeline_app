@@ -7,7 +7,7 @@ pipeline {
 kind: Pod
 spec:
   containers:
-  - name: run-artifact
+  - name: app
     image: iptcp/gradle-app:0.3
     imagePullPolicy: IfNotPresent
     command: ["sleep"]
@@ -23,21 +23,25 @@ spec:
     }
     stages {
         stage('Download from GCS') {
-            steps{
+            steps {
+              container('app') {
                 // Download from GCS bucket object named PATTERN to directory LOCAL_DIR.
                 step([$class: 'DownloadStep', credentialsId: env
                         .CREDENTIALS_ID,  bucketUri: "gs://${env.BUCKET}/${env.PATTERN}",
                       localDirectory: env.LOCAL_DIR])
             }
+            }
         }
         stage('Run artifact') {
-            steps{
+            steps {
+              container('app') {
               echo "Checking java version"
               sh 'java -version'
               echo "Unpacking artifact"
               sh 'tar -xvf /tmp/app/build/distributions/app.tar'
               echo "Running artifact"
               sh './app/bin/app'
+            }
             }
         }
     }
