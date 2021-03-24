@@ -5,6 +5,7 @@ spec:
   containers:
   - name: gradle-build
     image: iptcp/gradle-app:0.3
+    workingDir: /home/gradle
     command:
     - sleep
     args:
