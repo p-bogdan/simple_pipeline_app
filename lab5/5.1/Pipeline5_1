@@ -5,7 +5,6 @@ spec:
   containers:
   - name: gradle-build
     image: iptcp/gradle-app:0.3
-    workingDir: /home/gradle
     command:
     - sleep
     args:
@@ -16,7 +15,7 @@ node(POD_LABEL) {
     stage('Building and running app') {
       container('gradle-build') {
         sh 'java -version'
-        sh 'ls -alR /home'
+        sh 'cd /home/gradle'
         echo "Running gradle app"
         sh './gradlew run'
       }
