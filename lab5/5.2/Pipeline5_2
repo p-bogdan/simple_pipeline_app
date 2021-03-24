@@ -26,6 +26,9 @@ pipeline {
   stages {
     stage('Download from GCS') {
       steps {
+        build job: '$JOB_NAME', parameters: [
+        string(name: 'pipeline_5.1', value: env.NAME)
+    ], wait: false
         container('app') {
          step([$class: 'DownloadStep', credentialsId: env
                         .CREDENTIALS_ID,  bucketUri: "gs://${env.BUCKET}/${env.PATTERN}",
