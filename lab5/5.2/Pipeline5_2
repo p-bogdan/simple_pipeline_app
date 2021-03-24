@@ -1,18 +1,20 @@
 pipeline {
   agent {
     kubernetes {
-      //cloud 'kubernetes'
-      //defaultContainer ''
-      yaml """
-kind: Pod
-spec:
-  containers:
-  - name: app
-    image: iptcp/gradle-app:0.3
-    imagePullPolicy: IfNotPresent
-    command: ["sleep"]
-    args: ["300"]
-"""
+      yaml """\
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          labels:
+            app: simple-app
+        spec:
+          containers:
+          - name: app
+            image: iptcp/gradle-app:0.3
+            command:
+            - cat
+            tty: true
+        """.stripIndent()
     }
   }
   environment {
@@ -21,20 +23,19 @@ spec:
         PATTERN = 'app/build/distributions/*.tar'
         LOCAL_DIR = '/home/gradle'
     }
-    stages {
-        stage('Download from GCS') {
-            steps {
-              container('app') {
-                // Download from GCS bucket object named PATTERN to directory LOCAL_DIR.
-                step([$class: 'DownloadStep', credentialsId: env
+  stages {
+    stage('Download from GCS') {
+      steps {
+        container('app') {
+         step([$class: 'DownloadStep', credentialsId: env
                         .CREDENTIALS_ID,  bucketUri: "gs://${env.BUCKET}/${env.PATTERN}",
                       localDirectory: env.LOCAL_DIR])
-            }
-            }
         }
-        stage('Run artifact') {
-            steps {
-              container('app') {
+      }  
+    }
+     stage('Run artifact') {
+      steps {
+        container('app') {
               echo "Checking java version"
               sh 'java -version'
               echo "Unpacking artifact"
@@ -42,9 +43,8 @@ spec:
               sh 'tar -xvf /tmp/app/build/distributions/app.tar'
               echo "Running artifact"
               sh './app/bin/app'
-            }
-            }
         }
+      }  
     }
+  }
 }
-      
