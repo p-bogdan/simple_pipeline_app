@@ -33,18 +33,5 @@ pipeline {
         }
       }  
     }
-     stage('Run artifact') {
-      steps {
-        container('app') {
-              echo "Checking java version"
-              sh 'java -version'
-              echo "Unpacking artifact"
-              sh 'ls -laR /home/gradle'
-              sh 'tar -xvf /tmp/app/build/distributions/app.tar'
-              echo "Running artifact"
-              sh './app/bin/app'
-        }
-      }  
-    }
   }
 }
