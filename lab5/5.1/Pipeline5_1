@@ -23,7 +23,7 @@ spec:
     }
     stage('Running app') {
       steps {
-        container('gradle-build') {
+        container('iptcp/gradle-app:0.3') {
         sh 'java -version'
         echo "Running gradle app"
         sh './gradlew run'
@@ -32,7 +32,7 @@ spec:
     }
     stage('Smoke test') {
       steps {
-        container('gradle-build') {
+        container('iptcp/gradle-app:0.3') {
         echo 'Smoke test'
         sh './gradlew run | grep "Hello World!"'
         }
@@ -40,7 +40,7 @@ spec:
         }
     stage('Upload artifact to GCP storage') {
       steps {
-        container('gradle-build') {
+        container('iptcp/gradle-app:0.3') {
         googleStorageUpload bucket: 'gs://simple-pipeline-artifact2', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*' 
         }
         }
