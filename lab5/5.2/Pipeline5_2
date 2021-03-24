@@ -8,7 +8,7 @@ kind: Pod
 spec:
   containers:
   - name: run-artifact
-    image: iptcp/gradle-app:0.2
+    image: iptcp/gradle-app:0.3
     imagePullPolicy: IfNotPresent
     command: ["sleep"]
     args: ["300"]
