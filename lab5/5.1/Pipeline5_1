@@ -23,6 +23,7 @@ spec:
     }
     stage('Running app') {
       steps {
+        sh 'java -version'
         echo "Running gradle app"
         sh './gradlew run'
       }

@@ -32,6 +32,8 @@ spec:
         }
         stage('Run artifact') {
             steps{
+              echo "Checking java version"
+              sh 'java -version'
               echo "Unpacking artifact"
               sh 'tar -xvf /tmp/app/build/distributions/app.tar'
               echo "Running artifact"
