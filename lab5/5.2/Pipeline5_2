@@ -19,7 +19,7 @@ spec:
         CREDENTIALS_ID ='simple-pipeline-app'
         BUCKET = 'simple-pipeline-artifact2'
         PATTERN = 'app/build/distributions/*.tar'
-        LOCAL_DIR = '/tmp'
+        LOCAL_DIR = '/home/gradle'
     }
     stages {
         stage('Download from GCS') {
@@ -38,7 +38,7 @@ spec:
               echo "Checking java version"
               sh 'java -version'
               echo "Unpacking artifact"
-              sh 'ls -laR /tmp'
+              sh 'ls -laR /home/gradle'
               sh 'tar -xvf /tmp/app/build/distributions/app.tar'
               echo "Running artifact"
               sh './app/bin/app'
