@@ -30,9 +30,6 @@ pipeline {
          step([$class: 'DownloadStep', credentialsId: env
                         .CREDENTIALS_ID,  bucketUri: "gs://${env.BUCKET}/${env.PATTERN}",
                       localDirectory: env.LOCAL_DIR])
-         sh 'ls -alR /home/gradle/app'
-         sh 'pwd'
-         sh 'whoami'
         }
       }  
     }
@@ -42,8 +39,12 @@ pipeline {
          echo "Checking java version"
               sh 'java -version'
               sh 'tar -xvf app/build/distributions/app.tar'
+              echo "Running artifact"
+              sh './app/bin/app'
         }
-      }  
+      }
     }
+
   }
+
 }
