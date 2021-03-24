@@ -11,7 +11,7 @@ spec:
     image: iptcp/gradle-app:0.1
     imagePullPolicy: IfNotPresent
     command: ["sleep"]
-    args: ["10"]
+    args: ["300"]
 """
     }
   }
