@@ -33,5 +33,14 @@ pipeline {
         }
       }  
     }
+    stage('Run artifact') {
+      steps {
+        container('app') {
+         echo "Checking java version"
+              sh 'java -version'
+              sh 'ls -alR /tmp'
+        }
+      }  
+    }
   }
 }
