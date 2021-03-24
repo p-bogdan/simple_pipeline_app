@@ -31,7 +31,8 @@ spec:
             }
         }
         stage('Run artifact') {
-            container('run-artifact') {
+            container('run-artifact')
+            steps{
               echo "Checking java version"
               sh 'java -version'
               echo "Unpacking artifact"
