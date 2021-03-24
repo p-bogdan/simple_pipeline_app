@@ -17,6 +17,10 @@ pipeline {
         """.stripIndent()
     }
   }
+  triggers {
+  upstream(upstreamProjects: "pipeline_5.1/main/", threshold: hudson.model.Result.SUCCESS)
+}
+
   environment {
         CREDENTIALS_ID ='simple-pipeline-app'
         BUCKET = 'simple-pipeline-artifact2'
@@ -26,10 +30,7 @@ pipeline {
   stages {
     stage('Download from GCS') {
       steps {
-        build job: 'Pipeline_5.2', parameters: [
-        string(name: 'pipeline_5.1', value: env.NAME)
-    ], wait: false
-        container('app') {
+          container('app') {
          step([$class: 'DownloadStep', credentialsId: env
                         .CREDENTIALS_ID,  bucketUri: "gs://${env.BUCKET}/${env.PATTERN}",
                       localDirectory: env.LOCAL_DIR])
