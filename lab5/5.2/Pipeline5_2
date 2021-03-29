@@ -1,3 +1,4 @@
+@Library('simple-pipeline')_
 pipeline {
   agent {
     kubernetes {
@@ -28,9 +29,10 @@ pipeline {
       steps {
         build job: "pipeline_5.1/main", propagate: true, wait: true
           container('app') {
-         step([$class: 'DownloadStep', credentialsId: env
+         /*step([$class: 'DownloadStep', credentialsId: env
                         .CREDENTIALS_ID,  bucketUri: "gs://${env.BUCKET}/${env.PATTERN}",
-                      localDirectory: env.LOCAL_DIR])
+                      localDirectory: env.LOCAL_DIR])*/
+         pipeline5.downloadFromBucket()             
         }
       }  
     }
