@@ -17,6 +17,7 @@ pipeline {
         """.stripIndent()
     }
   }
+  @Library('simple-pipeline')_
   stages {
     stage('Building app') {
       steps {
@@ -45,7 +46,8 @@ pipeline {
     stage('Upload artifact to GCP storage') {
       steps {
         container('app') {
-        googleStorageUpload bucket: 'gs://simple-pipeline-artifact2', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*'
+        //googleStorageUpload bucket: 'gs://simple-pipeline-artifact2', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*'
+        pipeline5.uploadToBucket()
         }
       }  
     }
