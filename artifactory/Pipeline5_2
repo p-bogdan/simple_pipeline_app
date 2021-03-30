@@ -48,7 +48,7 @@ pipeline {
               sh 'java -version'
               sh 'ls -laR /tmp'
               //sh '/home/jenkins/agent/workspace/artifactory-5.2_main'
-              //sh 'tar -xvf simple-app-files/app.tar'
+              sh 'tar -xvf /tmp/app.tar'
               //echo "Running artifact"
               //sh './app/bin/app'
       }
