@@ -42,7 +42,7 @@ pipeline {
     stage ('Publish build info') {
             steps {
                 rtUpload (
-    serverId: 'Artifactory-1',
+    serverId: 'itlabs',
     spec: '''{
           "files": [
             {
