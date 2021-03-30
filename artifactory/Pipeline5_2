@@ -34,7 +34,7 @@ pipeline {
           "files": [
             {
               "pattern": "simple-pipeline/simple-app-files/*.tar",
-              "target": "."
+              "target": "/tmp"
             }
           ]
     }''',
@@ -46,9 +46,10 @@ pipeline {
         
          echo "Checking java version"
               sh 'java -version'
+              sh 'ls -laR /tmp'
               //sh '/home/jenkins/agent/workspace/artifactory-5.2_main'
-              sh 'tar -xvf simple-app-files/app.tar'
-              echo "Running artifact"
+              //sh 'tar -xvf simple-app-files/app.tar'
+              //echo "Running artifact"
               //sh './app/bin/app'
       }
     }
