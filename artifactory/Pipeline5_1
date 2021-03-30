@@ -39,13 +39,13 @@ pipeline {
         sh './gradlew run | grep "Hello World!"'
       }  
     }
-    stage('Upload artifact to GCP storage') {
-      steps {
-        script {
-        pipeline5.uploadToBucket()
+    stage ('Publish build info') {
+            steps {
+                rtPublishBuildInfo (
+                    serverId: "itlabs"
+                )
+            }
         }
-      }  
-    }
   }
 
 }
