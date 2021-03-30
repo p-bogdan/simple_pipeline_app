@@ -46,7 +46,7 @@ pipeline {
     spec: '''{
           "files": [
             {
-              "pattern": "app/build/distributions/*.tar",
+              "pattern": "app/build/distributions/*",
               "target": "simple-pipeline/simple-app-files/"
             }
          ]
