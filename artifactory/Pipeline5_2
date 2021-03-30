@@ -18,32 +18,37 @@ pipeline {
         """.stripIndent()
     }
   }
-  environment {
+  /*environment {
         CREDENTIALS_ID ='simple-pipeline-app'
         BUCKET = 'simple-pipeline-artifact2'
         PATTERN = 'app/build/distributions/*.tar'
         LOCAL_DIR = '.'
-    }
+    }*/
   stages {
     stage('Download from GCS') {
       steps {
-        build job: "pipeline_5.1/main", propagate: true, wait: true
-          container('app') {
-          script {  
-          pipeline5.downloadFromBucket()
-          }          
-        }
+        build job: "artifactory-5.1/main", propagate: true, wait: true
+          rtDownload (
+    serverId: 'itlabs',
+    spec: '''{
+          "files": [
+            {
+              "pattern": "simple-pipeline/simple-app-files/*.tar",
+              "target": "."
+            }
+          ]
+    }''',
+)
       }  
     }
     stage('Run artifact') {
       steps {
-        container('app') {
+        
          echo "Checking java version"
               sh 'java -version'
               sh 'tar -xvf app/build/distributions/app.tar'
               echo "Running artifact"
               sh './app/bin/app'
-        }
       }
     }
 
