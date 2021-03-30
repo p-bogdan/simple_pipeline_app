@@ -46,9 +46,9 @@ pipeline {
         
          echo "Checking java version"
               sh 'java -version'
-              sh '/home/jenkins/agent/workspace/artifactory-5.2_main'
-              //sh 'tar -xvf app/build/distributions/app.tar'
-              //echo "Running artifact"
+              //sh '/home/jenkins/agent/workspace/artifactory-5.2_main'
+              sh 'tar -xvf simple-app-files/app.tar'
+              echo "Running artifact"
               //sh './app/bin/app'
       }
     }
