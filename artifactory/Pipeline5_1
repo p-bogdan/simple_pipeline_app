@@ -41,10 +41,19 @@ pipeline {
     }
     stage ('Publish build info') {
             steps {
-                rtPublishBuildInfo (
-                    serverId: "itlabs"
-                )
+                rtUpload (
+    serverId: 'Artifactory-1',
+    spec: '''{
+          "files": [
+            {
+              "pattern": "app/build/distributions/*",
+              "target": "simple-pipeline/simple-app-files/"
             }
+         ]
+    }''',
+)
+  )
+   }
         }
   }
 
