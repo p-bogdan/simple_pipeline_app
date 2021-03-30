@@ -1,0 +1,61 @@
+@Library('simple-pipeline')_
+pipeline {
+  agent {
+    kubernetes {
+      yaml """\
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          labels:
+            app: simple-app
+        spec:
+          containers:
+          - name: app
+            image: iptcp/gradle-app:0.3
+            command:
+            - cat
+            tty: true
+        """.stripIndent()
+    }
+  }
+  
+  stages {
+    stage('Building app') {
+      steps {
+        /*container('app') {
+          
+        }*/
+        sh './gradlew build'
+      }  
+    }
+    
+     stage('Running app') {
+      steps {
+        container('app') {
+        sh 'java -version'
+        echo "Running gradle app"
+        sh './gradlew run'
+        }
+      }  
+    }
+    stage('Smoke test') {
+      steps {
+        container('app') {
+        echo 'Smoke test'
+        sh './gradlew run | grep "Hello World!"'
+        }
+      }  
+    }
+    stage('Upload artifact to GCP storage') {
+      steps {
+        container('app') {
+        script {
+        //googleStorageUpload bucket: 'gs://simple-pipeline-artifact2', credentialsId: 'simple-pipeline-app', pattern: 'app/build/distributions/*'
+        pipeline5.uploadToBucket()
+        }
+        }
+      }  
+    }
+  }
+
+}

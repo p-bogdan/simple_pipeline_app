@@ -1,0 +1,52 @@
+@Library('simple-pipeline')_
+pipeline {
+  agent {
+    kubernetes {
+      yaml """\
+        apiVersion: v1
+        kind: Pod
+        metadata:
+          labels:
+            app: simple-app
+        spec:
+          containers:
+          - name: app
+            image: iptcp/gradle-app:0.3
+            command:
+            - cat
+            tty: true
+        """.stripIndent()
+    }
+  }
+  environment {
+        CREDENTIALS_ID ='simple-pipeline-app'
+        BUCKET = 'simple-pipeline-artifact2'
+        PATTERN = 'app/build/distributions/*.tar'
+        LOCAL_DIR = '.'
+    }
+  stages {
+    stage('Download from GCS') {
+      steps {
+        build job: "pipeline_5.1/main", propagate: true, wait: true
+          container('app') {
+          script {  
+          pipeline5.downloadFromBucket()
+          }          
+        }
+      }  
+    }
+    stage('Run artifact') {
+      steps {
+        container('app') {
+         echo "Checking java version"
+              sh 'java -version'
+              sh 'tar -xvf app/build/distributions/app.tar'
+              echo "Running artifact"
+              sh './app/bin/app'
+        }
+      }
+    }
+
+  }
+
+}
