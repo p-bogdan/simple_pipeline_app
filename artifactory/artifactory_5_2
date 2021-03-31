@@ -32,6 +32,9 @@ pipeline {
             script {
             artifactory5.downloadToArtifactory()
             }
+          }
+      }
+      }
 
     stage('Run artifact') {
       steps {
@@ -47,7 +50,4 @@ pipeline {
 
   }
 
-}
-}
-}
 }
