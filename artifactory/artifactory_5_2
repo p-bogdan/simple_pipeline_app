@@ -25,25 +25,14 @@ pipeline {
         LOCAL_DIR = '.'
     }*/
   stages {
-    stage('Download from GCS') {
+      stage('Download from Artifactory') {
       steps {
         build job: "artifactory-5.1/main", propagate: true, wait: true
-        container('app') {
-           
-          rtDownload (
-    serverId: 'itlabs',
-    spec: '''{
-          "files": [
-            {
-              "pattern": "simple-pipeline/simple-app-files/*.tar",
-              "target": "."
+          container('app') {
+            script {
+            artifactory5.downloadToArtifactory()
             }
-          ]
-    }''',
-)
-      }
-        }
-      }  
+
     stage('Run artifact') {
       steps {
         container('app') {

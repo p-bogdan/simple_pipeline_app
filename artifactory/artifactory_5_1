@@ -39,21 +39,14 @@ pipeline {
         sh './gradlew run | grep "Hello World!"'
       }  
     }
-    stage ('Publish build info') {
-            steps {
-                rtUpload (
-    serverId: 'itlabs',
-    spec: '''{
-          "files": [
-            {
-              "pattern": "app/build/distributions/*",
-              "target": "simple-pipeline/simple-app-files/"
-            }
-         ]
-    }''',
-)
-   }
+    stage('Upload artifact to Artifactory') {
+      steps {
+        script {
+        artifactory5.uploadToArtifactory()
         }
+      }  
+    }
+    
   }
 
 }
