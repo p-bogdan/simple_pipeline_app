@@ -1,0 +1,22 @@
+pipeline {
+    agent {
+        label 'stapp03'
+    }
+    
+    stages {
+        stage('Build') {
+            steps {
+                git branch: "master",
+                    url: "http://git.stratos.xfusioncorp.com/sarah/mr_job.git"
+                
+                sh 'docker build -t stregi01.stratos.xfusioncorp.com:5000/nginx:latest .'
+                sh 'docker push stregi01.stratos.xfusioncorp.com:5000/nginx:latest'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh 'docker run --name=nginx-app -p 8080:80 -itd stregi01.stratos.xfusioncorp.com:5000/nginx:latest'
+            }
+        }
+    }
+    }
